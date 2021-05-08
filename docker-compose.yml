@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  web:
+    build: '.'
+    ports:
+      - "3000:80"
+    depends_on:
+      - db
+    env_file: 
+      - .env
+    networks:
+      - mabiofa
+  db:
+    image: mysql:5.6.43
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./database-mockup.sql:/docker-entrypoint-initdb.d/dump.sql
+    networks:
+      - mabiofa
+
+networks:
+  mabiofa:

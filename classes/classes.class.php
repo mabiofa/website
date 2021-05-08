@@ -1,4 +1,11 @@
 <?php
+use Utils/Env;
+(new Env(__DIR__ . '/.env'))->load();
+$DB_HOST = getenv('DATABASE_HOST');
+$DB_TYPE = getenv('DATABASE_TYPE');
+$DB_NAME = getenv('MYSQL_DATABASE');
+$DB_USERNAME = getenv('MYSQL_USER');
+$DB_PASSWORD = getenv('MYSQL_PASSWORD');
 class utilisateurs{
 	public $id;
 	public $nom;
@@ -25,8 +32,8 @@ class utilisateurs{
 	public static  function connexion(){
 		$cnx=null;
 		try {
-            
-            $cnx=new PDO('mysql:host=91.234.195.212;dbname=c1528924c_clients', 'c1528924c_eden1', '@@Eden1@@06');
+						//$cnx=new PDO('mysql:host=91.234.195.212;dbname=c1528924c_clients', 'c1528924c_eden1', '@@Eden1@@06');
+            $cnx=new PDO('{$DB_TYPE}:host={$DB_HOST};dbname={$DB_NAME}', $DB_USERNAME, $DB_PASSWORD);
 			return $cnx;
 		} catch (Exception $e) {
             
